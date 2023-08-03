@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple CRUD Application</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+      <h1>Simple CRUD Application</h1>
+      <form id="crud-form">
+        <input type="text" id="item-input" placeholder="Enter item">
+        <button type="submit">Add Item</button>
+      </form>
+      <ul id="item-list">
+        <!-- The list of items will be displayed here -->
+      </ul>
+    </div>
+    <script>
+      const form = document.getElementById('crud-form');
+      const itemList = document.getElementById('item-list');
+      const itemInput = document.getElementById('item-input');
+  
+      // Array to store the list of items
+      let items = [];
+  
+      // Function to add a new item
+      function addItem(item) {
+        items.push(item);
+        displayItems();
+      }
+  
+      // Function to remove an item
+      function removeItem(index) {
+        items.splice(index, 1);
+        displayItems();
+      }
+  
+      // Function to edit an item
+      function editItem(index) {
+        const editedItem = prompt('Enter the new item text:', items[index]);
+        if (editedItem !== null) {
+          items[index] = editedItem.trim();
+          displayItems();
+        }
+      }
+  
+      // Function to display the list of items
+      function displayItems() {
+        itemList.innerHTML = '';
+        items.forEach((item, index) => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          const editBtn = document.createElement('button');
+          editBtn.textContent = 'Edit';
+          editBtn.addEventListener('click', () => editItem(index));
+          const deleteBtn = document.createElement('button');
+          deleteBtn.textContent = 'Delete';
+          deleteBtn.addEventListener('click', () => removeItem(index));
+          li.appendChild(editBtn);
+          li.appendChild(deleteBtn);
+          itemList.appendChild(li);
+        });
+      }
+  
+      // Handle form submission to add a new item
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newItem = itemInput.value.trim();
+        if (newItem !== '') {
+          addItem(newItem);
+          itemInput.value = '';
+        }
+      });
+  
+      // Initial display of items (if any)
+      displayItems();
+    </script>
+  </body>
+  </html>
