@@ -5,6 +5,6 @@ Simple form
 
 
 
-I am looking freelancer projects in reactJS ,html, css ,JS, firebase database ,MySQL database
-
-Feel free to to contact. email : magadummanjunath65@gmail.com   mobile : +91 789288699
+For queries please contact
+ email : magadummanjunath65@gmail.com  
+ mobile : +91 789288699
