@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bomber Game</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(10, 40px);
+      grid-template-rows: repeat(10, 40px);
+      gap: 2px;
+    }
+
+    .cell {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      background-color: gray;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .restart-btn {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-container" id="grid">
+    <!-- Cells will be dynamically generated here -->
+  </div>
+  <button id="restartBtn" onclick="restartGame()">Restart Game</button>
+
+  <script>
+    const grid = document.getElementById("grid");
+    const restartBtn = document.getElementById("restartBtn");
+    const gridSize = 10;
+    let score = 0;
+    let gameInProgress = true;
+
+    function generateGrid() {
+      for (let row = 0; row < gridSize; row++) {
+        for (let col = 0; col < gridSize; col++) {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+          cell.onclick = () => cellClick(cell);
+          grid.appendChild(cell);
+        }
+      }
+    }
+
+    function resetGrid() {
+      const cells = document.getElementsByClassName("cell");
+      for (let i = 0; i < cells.length; i++) {
+        cells[i].style.backgroundColor = "gray";
+        cells[i].textContent = ""; // Clear the counting
+      }
+    }
+
+    function randomCell() {
+      return Math.floor(Math.random() * gridSize * gridSize);
+    }
+
+    function randomColor() {
+      return Math.random() < 0.5 ? "green" : "red";
+    }
+
+    function cellClick(cell) {
+      if (gameInProgress) {
+        if (cell.style.backgroundColor === "gray") {
+          const color = randomColor();
+          cell.style.backgroundColor = color;
+          if (color === "green") {
+            score++;
+            cell.textContent = score; // Show counting on the cell
+          } else {
+            gameInProgress = false;
+            alert(`Game Over! Your Score: ${score}`);
+          }
+        }
+      }
+    }
+
+    function restartGame() {
+      score = 0;
+      gameInProgress = true;
+      resetGrid();
+    }
+
+    generateGrid();
+  </script>
+</body>
+</html>
